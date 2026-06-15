@@ -1,2 +1,152 @@
 # Egift-card
 E-gift card
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>E-Gift Card</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f5f5f5;
+text-align:center;
+margin:0;
+}
+
+.page{
+display:none;
+padding:40px;
+}
+
+.active{
+display:block;
+}
+
+button{
+background:#28a745;
+color:white;
+border:none;
+padding:12px 25px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+margin-top:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.card img{
+width:100%;
+border-radius:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="page1" class="page active">
+<h1>🎁 Congratulations!</h1>
+<h2>Here's your e-Gift Card.</h2>
+<p>Click Next to choose one.</p>
+
+<button onclick="next()">Next</button>
+</div>
+
+<div id="page2" class="page">
+
+<h2>Choose Your Gift Card</h2>
+
+<div class="cards">
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+1">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+2">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+3">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+4">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+5">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+6">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+7">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+8">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+9">
+<button onclick="finish()">Get This One</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/250x150?text=Gift+Card+10">
+<button onclick="finish()">Get This One</button>
+</div>
+
+</div>
+
+</div>
+
+<div id="page3" class="page">
+<h1>✅ Success!</h1>
+
+<h2>Your gift card has been reserved.</h2>
+
+<p><b>Status:</b> Shipping is being processed.</p>
+
+</div>
+
+<script>
+function next(){
+document.getElementById("page1").classList.remove("active");
+document.getElementById("page2").classList.add("active");
+}
+
+function finish(){
+document.getElementById("page2").classList.remove("active");
+document.getElementById("page3").classList.add("active");
+}
+</script>
+
+</body>
+</html>
