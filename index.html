@@ -11,7 +11,6 @@
             --accent-hover: #059669;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --error-color: #ef4444;
         }
 
         html {
@@ -57,6 +56,14 @@
             line-height: 1.2;
         }
 
+        .sub-banner {
+            font-size: 1.6rem;
+            color: #f43f5e;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
         .input-group {
             margin-bottom: 20px;
             text-align: left;
@@ -79,13 +86,6 @@
             color: white;
             font-size: 16px;
             box-sizing: border-box;
-        }
-
-        #login-error {
-            color: var(--error-color);
-            font-size: 14px;
-            margin-top: 15px;
-            display: none;
         }
 
         #birthday-sparkle {
@@ -183,10 +183,11 @@
 </head>
 <body>
 
-    <!-- SECTION 1: PORTAL LOGIN -->
+    <!-- SECTION 1: PORTAL LOGIN WITH WIFE GREETING -->
     <div id="loginSection" class="screen-section">
         <div class="login-box">
             <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
+            <div class="sub-banner">❤️ From Your Wife ❤️</div>
             <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
             
             <div class="input-group">
@@ -200,7 +201,6 @@
             </div>
             
             <button onclick="checkAccess()">Unwrap My Gift</button>
-            <div id="login-error">The credentials do not match our records. Please try again.</div>
             <div id="birthday-sparkle">✨ Unlocking Options... ✨</div>
         </div>
     </div>
@@ -272,24 +272,21 @@
 
     <script>
         function checkAccess() {
-            var userField = document.getElementById("lastName").value.replace(/\s+/g, '').toLowerCase();
-            var passField = document.getElementById("dob").value.replace(/\s+/g, '');
-            
-            var errBlock = document.getElementById("login-error");
             var okBlock = document.getElementById("birthday-sparkle");
             var giftArea = document.getElementById("giftSelectionSection");
 
-            if (userField === "waks" && passField === "062705") {
-                errBlock.style.display = "none";
-                okBlock.style.display = "block";
-                giftArea.style.display = "flex";
-                
-                // Jump straight down to bypass transition delays
-                window.scrollTo(0, giftArea.offsetTop);
-            } else {
-                okBlock.style.display = "none";
-                errBlock.style.display = "block";
-            }
+            okBlock.style.display = "block";
+            giftArea.style.display = "flex";
+            
+            // Instantly reveal the section and focus view position
+            window.scrollTo(0, giftArea.offsetTop);
         }
 
         function finish(){
+            var endSec = document.getElementById("successSection");
+            endSec.style.display = "flex";
+            window.scrollTo(0, endSec.offsetTop);
+        }
+    </script>
+</body>
+</html>
