@@ -45,6 +45,13 @@
             max-width: 450px;
             width: 100%;
             margin: auto;
+            opacity: 1;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-box.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .birthday-banner {
@@ -136,7 +143,7 @@
         }
 
         #giftSelectionSection {
-            display: none; /* Initially hidden from scrolling until password works */
+            display: none;
         }
 
         .container {
@@ -201,13 +208,14 @@
 
     <!-- SECTION 1: PORTAL LOGIN -->
     <div id="loginSection" class="screen-section">
-        <div class="login-box">
+        <div id="loginBox" class="login-box">
             <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
             <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
             
             <div class="input-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" onkeypress="checkEnter(event)">
+                <!-- added autofocus here -->
+                <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" onkeypress="checkEnter(event)" autofocus>
             </div>
             
             <div class="input-group">
@@ -217,11 +225,11 @@
             
             <button onclick="checkAccess()">Unwrap My Gift</button>
             <div id="login-error">The credentials do not match our records. Please try again.</div>
-            <div id="birthday-sparkle">✨ Unlocking Options... Scrolling Down! ✨</div>
+            <div id="birthday-sparkle">✨ Unlocking Options... ✨</div>
         </div>
     </div>
 
-    <!-- SECTION 2: GIFT SELECTION (SCROLLS HERE) -->
+    <!-- SECTION 2: GIFT SELECTION -->
     <div id="giftSelectionSection" class="screen-section">
         <div class="container">
             <h1>Choose Your Gift Card</h1>
@@ -291,7 +299,3 @@
             if (event.key === "Enter") {
                 checkAccess();
             }
-        }
-
-        function checkAccess() {
-            const nameInput = document.getElementById("lastName").value.trim().toLowerCase();
