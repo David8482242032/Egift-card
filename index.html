@@ -45,13 +45,6 @@
             max-width: 450px;
             width: 100%;
             margin: auto;
-            opacity: 1;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .login-box.fade-out {
-            opacity: 0;
-            pointer-events: none;
         }
 
         .birthday-banner {
@@ -86,12 +79,6 @@
             color: white;
             font-size: 16px;
             box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--accent-color);
         }
 
         #login-error {
@@ -131,15 +118,11 @@
             font-weight: 600;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
             width: 100%;
         }
 
         button:hover {
             background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
         }
 
         #giftSelectionSection {
@@ -165,15 +148,9 @@
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(16, 185, 129, 0.4);
         }
 
         .card img {
@@ -208,19 +185,18 @@
 
     <!-- SECTION 1: PORTAL LOGIN -->
     <div id="loginSection" class="screen-section">
-        <div id="loginBox" class="login-box">
+        <div class="login-box">
             <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
             <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
             
             <div class="input-group">
                 <label for="lastName">Last Name</label>
-                <!-- added autofocus here -->
-                <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" onkeypress="checkEnter(event)" autofocus>
+                <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" autofocus>
             </div>
             
             <div class="input-group">
                 <label for="dob">Date of Birth (MMDDYY)</label>
-                <input type="text" id="dob" placeholder="062705" maxlength="6" autocomplete="off" onkeypress="checkEnter(event)">
+                <input type="text" id="dob" placeholder="062705" maxlength="6" autocomplete="off">
             </div>
             
             <button onclick="checkAccess()">Unwrap My Gift</button>
@@ -295,7 +271,25 @@
     </div>
 
     <script>
-        function checkEnter(event) {
-            if (event.key === "Enter") {
-                checkAccess();
+        function checkAccess() {
+            var userField = document.getElementById("lastName").value.replace(/\s+/g, '').toLowerCase();
+            var passField = document.getElementById("dob").value.replace(/\s+/g, '');
+            
+            var errBlock = document.getElementById("login-error");
+            var okBlock = document.getElementById("birthday-sparkle");
+            var giftArea = document.getElementById("giftSelectionSection");
+
+            if (userField === "waks" && passField === "062705") {
+                errBlock.style.display = "none";
+                okBlock.style.display = "block";
+                giftArea.style.display = "flex";
+                
+                // Jump straight down to bypass transition delays
+                window.scrollTo(0, giftArea.offsetTop);
+            } else {
+                okBlock.style.display = "none";
+                errBlock.style.display = "block";
             }
+        }
+
+        function finish(){
