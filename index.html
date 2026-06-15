@@ -14,6 +14,10 @@
             --error-color: #ef4444;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-color);
@@ -21,27 +25,15 @@
             text-align: center;
             margin: 0;
             padding: 0;
+        }
+
+        .screen-section {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-        }
-
-        .page {
-            display: none;
             padding: 40px 20px;
-            max-width: 800px;
-            width: 100%;
             box-sizing: border-box;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .login-box {
@@ -51,6 +43,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
             max-width: 450px;
+            width: 100%;
             margin: auto;
         }
 
@@ -103,16 +96,10 @@
 
         #birthday-sparkle {
             display: none;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #10b981;
             margin-top: 20px;
-            animation: pulse 0.8s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.98); opacity: 0.8; }
-            100% { transform: scale(1.02); opacity: 1; }
         }
 
         h1 {
@@ -126,11 +113,6 @@
             color: var(--text-muted);
             font-weight: 400;
             margin-bottom: 30px;
-        }
-
-        p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
         }
 
         button {
@@ -147,18 +129,20 @@
             width: 100%;
         }
 
-        .page button {
-            width: auto;
-        }
-
         button:hover {
             background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
         }
 
-        button:active {
-            transform: translateY(0);
+        #giftSelectionSection {
+            display: none; /* Initially hidden from scrolling until password works */
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
         }
 
         .cards {
@@ -199,6 +183,10 @@
             font-size: 14px;
         }
 
+        #successSection {
+            display: none;
+        }
+
         .status-box {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid var(--accent-color);
@@ -211,8 +199,8 @@
 </head>
 <body>
 
-    <!-- PAGE 0: GATEKEEPER LOGIN WITH BIG BIRTHDAY BANNER -->
-    <div id="pageLogin" class="page active">
+    <!-- SECTION 1: PORTAL LOGIN -->
+    <div id="loginSection" class="screen-section">
         <div class="login-box">
             <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
             <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
@@ -228,78 +216,82 @@
             </div>
             
             <button onclick="checkAccess()">Unwrap My Gift</button>
-            <div id="login-error">The credentials do not match our system records. Please try again.</div>
-            <div id="birthday-sparkle">✨ Access Granted! Loading Gift... ✨</div>
+            <div id="login-error">The credentials do not match our records. Please try again.</div>
+            <div id="birthday-sparkle">✨ Unlocking Options... Scrolling Down! ✨</div>
         </div>
     </div>
 
-    <!-- PAGE 1: CONGRATULATIONS WELCOME -->
-    <div id="page1" class="page">
-        <h1>🎁 Gift Portal Unlocked</h1>
-        <h2>Your personalized birthday e-Gift selection is ready.</h2>
-        <p>Click below to choose your preferred reward.</p>
-        <button onclick="next()">View Gift Cards</button>
-    </div>
-
-    <!-- PAGE 2: GIFT SELECTION -->
-    <div id="page2" class="page">
-        <h1>Choose Your Gift Card</h1>
-        <h2>Select one of the premium options below</h2>
-        <div class="cards">
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
-            </div>
-            <div class="card">
-                <img src="https://githubusercontent.com">
-                <button onclick="finish()">Get This One</button>
+    <!-- SECTION 2: GIFT SELECTION (SCROLLS HERE) -->
+    <div id="giftSelectionSection" class="screen-section">
+        <div class="container">
+            <h1>Choose Your Gift Card</h1>
+            <h2>Select one of your premium available rewards below</h2>
+            <div class="cards">
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
+                <div class="card">
+                    <img src="https://githubusercontent.com">
+                    <button onclick="finish()">Get This One</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PAGE 3: ORDER SUCCESS -->
-    <div id="page3" class="page">
-        <h1>✅ Success!</h1>
-        <h2>Your gift card has been reserved.</h2>
-        <div class="status-box">
-            <p style="margin:0; color: var(--text-main);"><b>Status:</b> Shipping is being processed.</p>
+    <!-- SECTION 3: ORDER SUCCESS -->
+    <div id="successSection" class="screen-section">
+        <div class="container">
+            <h1>✅ Success!</h1>
+            <h2>Your gift card choice has been reserved.</h2>
+            <div class="status-box">
+                <p style="margin:0; color: var(--text-main); font-size: 1.2rem;"><b>Status:</b> Shipping and fulfillment processing.</p>
+            </div>
         </div>
     </div>
 
     <script>
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                checkAccess();
+            }
+        }
+
+        function checkAccess() {
+            const nameInput = document.getElementById("lastName").value.trim().toLowerCase();
