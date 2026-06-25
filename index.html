@@ -5,12 +5,13 @@
     <title>Premium E-Gift Card</title>
     <style>
         :root {
-            --bg-color: #0f172a;
+            --bg-color: #0b0f19;
             --card-bg: #1e293b;
             --accent-color: #10b981;
             --accent-hover: #059669;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --glow-color: rgba(16, 185, 129, 0.2);
         }
         html { scroll-behavior: smooth; }
         body {
@@ -20,7 +21,21 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
+
+        /* DYNAMIC BACKGROUND CANVAS */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
         .screen-section {
             min-height: 100vh;
             display: flex;
@@ -28,17 +43,30 @@
             align-items: center;
             padding: 40px 20px;
             box-sizing: border-box;
+            position: relative;
+            z-index: 1;
         }
+
+        /* SLEEK NEOMORPHIC PORTAL */
         .login-box {
-            background: var(--card-bg);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px var(--glow-color);
+            border: 1px solid rgba(16, 185, 129, 0.2);
             max-width: 450px;
             width: 100%;
             margin: auto;
+            transform: translateY(0);
+            transition: all 0.4s ease;
         }
+        .login-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 50px rgba(16, 185, 129, 0.4);
+        }
+
         .birthday-banner {
             font-size: 2.8rem;
             color: #fbbf24;
@@ -47,6 +75,7 @@
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1.2;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
         .sub-banner {
             font-size: 1.6rem;
@@ -54,6 +83,7 @@
             margin-top: 10px;
             margin-bottom: 25px;
             font-weight: 600;
+            text-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
         }
         .input-group {
             margin-bottom: 20px;
@@ -68,76 +98,135 @@
         }
         .input-group input {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.8);
             color: white;
             font-size: 16px;
             box-sizing: border-box;
+            transition: all 0.3s ease;
         }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 12px var(--glow-color);
+        }
+
         #birthday-sparkle {
             display: none;
             font-size: 1.5rem;
             font-weight: bold;
             color: #10b981;
             margin-top: 20px;
+            animation: pulse 1.5s infinite;
         }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -0.5px; }
-        h2 { font-size: 1.5rem; color: var(--text-muted); font-weight: 400; margin-bottom: 30px; }
+
+        h1 { font-size: 2.8rem; margin-bottom: 10px; letter-spacing: -0.5px; }
+        h2 { font-size: 1.4rem; color: var(--text-muted); font-weight: 400; margin-bottom: 40px; }
+        
         button {
-            background: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
             color: white;
             border: none;
-            padding: 14px 32px;
+            padding: 16px 32px;
             font-size: 16px;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             width: 100%;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
         }
-        button:hover { background: var(--accent-hover); }
-        #giftSelectionSection { display: none; }
-        .container { max-width: 1000px; width: 100%; margin: auto; }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+        button:active { transform: translateY(0); }
+
+        #giftSelectionSection { display: none; background: #0c1220; }
+        .container { max-width: 1100px; width: 100%; margin: auto; }
+        
+        /* 5-CHOICE CENTERED FLEX PATTERN */
         .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
             margin-top: 30px;
         }
+        
+        /* ANIMATED HOVER CARDS */
         .card {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            width: 260px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
         }
         .card img {
             width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            height: 160px;
+            border-radius: 12px;
+            margin-bottom: 20px;
             object-fit: cover;
+            background: #151f32;
         }
-        .card button { width: 100%; padding: 10px 20px; font-size: 14px; }
-        #successSection { display: none; }
+        .card button { padding: 12px 20px; font-size: 14px; }
+
+        #successSection { display: none; background: #080c14; }
+        
         .status-box {
-            background: rgba(244, 63, 94, 0.1);
-            border: 1px solid #f43f5e;
-            padding: 20px;
-            border-radius: 16px;
+            background: rgba(244, 63, 94, 0.07);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            padding: 40px;
+            border-radius: 24px;
             display: inline-block;
             margin-top: 25px;
-            max-width: 500px;
+            max-width: 550px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            animation: slideUp 0.6s ease;
+        }
+
+        /* INTERACTIVE CONFETTI CANVAS */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            pointer-events: none;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SECTION 1: PORTAL LOGIN WITH WIFE GREETING -->
+    <canvas id="matrixCanvas"></canvas>
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- SECTION 1: PORTAL LOGIN -->
     <div id="loginSection" class="screen-section">
         <div class="login-box">
             <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
@@ -155,33 +244,21 @@
             </div>
             
             <button onclick="checkAccess()">Unwrap My Gift</button>
-            <div id="birthday-sparkle">✨ Unlocking Options... ✨</div>
+            <div id="birthday-sparkle">✨ Unlocking Premium Options... ✨</div>
         </div>
     </div>
 
-    <!-- SECTION 2: GIFT SELECTION WITH CORRECTED IMAGE PATHS -->
+    <!-- SECTION 2: THE 5 PREMIUM REWARDS -->
     <div id="giftSelectionSection" class="screen-section">
         <div class="container">
             <h1>Choose Your Gift Card</h1>
-            <h2>Select one of your premium available rewards below</h2>
+            <h2>Select one of your top 5 premium rewards below</h2>
             <div class="cards">
-                <div class="card"><img src="Capture.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture1.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture3.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture4.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture5.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture6.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture7.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture8.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture9.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture10.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture12.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture13.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture14.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture15.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture16.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture17.PNG"><button onclick="finish()">Get This One</button></div>
-                <div class="card"><img src="Capture18.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture.PNG"><button onclick="finish()">Claim Reward 1</button></div>
+                <div class="card"><img src="Capture1.PNG"><button onclick="finish()">Claim Reward 2</button></div>
+                <div class="card"><img src="Capture3.PNG"><button onclick="finish()">Claim Reward 3</button></div>
+                <div class="card"><img src="Capture4.PNG"><button onclick="finish()">Claim Reward 4</button></div>
+                <div class="card"><img src="Capture5.PNG"><button onclick="finish()">Claim Reward 5</button></div>
             </div>
         </div>
     </div>
@@ -191,27 +268,22 @@
         <div class="container">
             <h1>🎁 Choice Registered!</h1>
             <div class="status-box">
-                <h2 style="color: #f43f5e; margin-top: 0; font-weight: 700;">🤫 Shhh... It's a Secret!</h2>
-                <p style="margin: 0; color: var(--text-main); font-size: 1.2rem; line-height: 1.5;">
-                    Stay tuned! Your gift choice has been locked in, but we can't tell you exactly when it arrives—it's a surprise! ❤️
+                <h2 style="color: #f43f5e; margin-top: 0; font-weight: 700; font-size: 1.8rem;">🤫 Shhh... It's a Secret!</h2>
+                <p style="margin: 0; color: var(--text-main); font-size: 1.25rem; line-height: 1.6;">
+                    Stay tuned! Your gift choice has been safely locked into the system. We can't tell you exactly when it arrives—it's a surprise! ❤️
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        function checkAccess() {
-            var okBlock = document.getElementById("birthday-sparkle");
-            var giftArea = document.getElementById("giftSelectionSection");
-            okBlock.style.display = "block";
-            giftArea.style.display = "flex";
-            window.scrollTo(0, giftArea.offsetTop);
+        // BACKGROUND DIGITAL MATRIX EFFECT
+        const matrix = document.getElementById('matrixCanvas');
+        const mCtx = matrix.getContext('2d');
+        function resizeMatrix() {
+            matrix.width = window.innerWidth;
+            matrix.height = window.innerHeight;
         }
-        function finish(){
-            var endSec = document.getElementById("successSection");
-            endSec.style.display = "flex";
-            window.scrollTo(0, endSec.offsetTop);
-        }
-    </script>
-</body>
-</html>
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
+
