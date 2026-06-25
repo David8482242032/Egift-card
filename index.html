@@ -147,7 +147,6 @@
         #giftSelectionSection { display: none; background: #0c1220; }
         .container { max-width: 1100px; width: 100%; margin: auto; }
         
-        /* 5-CHOICE CENTERED FLEX PATTERN */
         .cards {
             display: flex;
             flex-wrap: wrap;
@@ -156,7 +155,6 @@
             margin-top: 30px;
         }
         
-        /* ANIMATED HOVER CARDS */
         .card {
             background: var(--card-bg);
             padding: 24px;
@@ -280,10 +278,12 @@
         // BACKGROUND DIGITAL MATRIX EFFECT
         const matrix = document.getElementById('matrixCanvas');
         const mCtx = matrix.getContext('2d');
+        let fontSize = 16;
+        let drops = [];
+
         function resizeMatrix() {
             matrix.width = window.innerWidth;
             matrix.height = window.innerHeight;
-        }
-        resizeMatrix();
-        window.addEventListener('resize', resizeMatrix);
-
+            const columns = Math.floor(matrix.width / fontSize);
+            drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = 1;
