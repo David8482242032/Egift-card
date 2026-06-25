@@ -13,7 +13,6 @@
             --text-muted: #94a3b8;
             --glow-color: rgba(16, 185, 129, 0.2);
         }
-        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-color);
@@ -22,9 +21,13 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* DYNAMIC BACKGROUND CANVAS */
+        /* BACKGROUND MATRIX CANVAS */
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -36,15 +39,23 @@
             pointer-events: none;
         }
 
-        .screen-section {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: auto;
             padding: 40px 20px;
             box-sizing: border-box;
             position: relative;
             z-index: 1;
+        }
+
+        /* APPARATUS VISIBILITY CONTROLS */
+        .app-screen {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+        .app-screen.active {
+            display: block;
         }
 
         /* SLEEK PORTAL */
@@ -59,12 +70,6 @@
             max-width: 450px;
             width: 100%;
             margin: auto;
-            transform: translateY(0);
-            transition: all 0.4s ease;
-        }
-        .login-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 50px rgba(16, 185, 129, 0.4);
         }
 
         .birthday-banner {
@@ -105,21 +110,11 @@
             color: white;
             font-size: 16px;
             box-sizing: border-box;
-            transition: all 0.3s ease;
         }
         .input-group input:focus {
             outline: none;
             border-color: var(--accent-color);
             box-shadow: 0 0 12px var(--glow-color);
-        }
-
-        #birthday-sparkle {
-            display: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #10b981;
-            margin-top: 20px;
-            animation: pulse 1.5s infinite;
         }
 
         h1 { font-size: 2.8rem; margin-bottom: 10px; letter-spacing: -0.5px; }
@@ -142,11 +137,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
         }
-        button:active { transform: translateY(0); }
 
-        #giftSelectionSection { display: none; background: #0c1220; width: 100%; }
-        .container { max-width: 1100px; width: 100%; margin: auto; }
-        
         .cards {
             display: flex;
             flex-wrap: wrap;
@@ -169,7 +160,7 @@
         }
         .card:hover {
             transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             border-color: rgba(255,255,255,0.1);
         }
         .card img {
@@ -182,8 +173,6 @@
         }
         .card button { padding: 12px 20px; font-size: 14px; }
 
-        #successSection { display: none; background: #080c14; width: 100%; }
-        
         .status-box {
             background: rgba(244, 63, 94, 0.07);
             border: 1px solid rgba(244, 63, 94, 0.3);
@@ -193,7 +182,6 @@
             margin-top: 25px;
             max-width: 550px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            animation: slideUp 0.6s ease;
         }
 
         /* INTERACTIVE CONFETTI CANVAS */
@@ -208,14 +196,9 @@
             display: none;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -224,31 +207,31 @@
     <canvas id="matrixCanvas"></canvas>
     <canvas id="confettiCanvas"></canvas>
 
-    <!-- SECTION 1: PORTAL LOGIN -->
-    <div id="loginSection" class="screen-section">
-        <div class="login-box">
-            <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
-            <div class="sub-banner">❤️ From Your Wife ❤️</div>
-            <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
-            
-            <div class="input-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" autofocus>
+    <div class="container">
+        
+        <!-- SECTION 1: PORTAL LOGIN -->
+        <div id="loginSection" class="app-screen active">
+            <div class="login-box">
+                <h1 class="birthday-banner">🎉 Happy Birthday! 🎂</h1>
+                <div class="sub-banner">❤️ From Your Wife ❤️</div>
+                <h3 style="margin-top: 5px; margin-bottom: 25px; color: var(--text-muted); font-weight: 400;">Please verify your details to claim your reward.</h3>
+                
+                <div class="input-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Enter last name" autocomplete="off" autofocus>
+                </div>
+                
+                <div class="input-group">
+                    <label for="dob">Date of Birth (MMDDYY)</label>
+                    <input type="text" id="dob" placeholder="062705" maxlength="6" autocomplete="off">
+                </div>
+                
+                <button onclick="checkAccess()">Unwrap My Gift</button>
             </div>
-            
-            <div class="input-group">
-                <label for="dob">Date of Birth (MMDDYY)</label>
-                <input type="text" id="dob" placeholder="062705" maxlength="6" autocomplete="off">
-            </div>
-            
-            <button onclick="checkAccess()">Unwrap My Gift</button>
-            <div id="birthday-sparkle">✨ Unlocking Premium Options... ✨</div>
         </div>
-    </div>
 
-    <!-- SECTION 2: THE 5 PREMIUM REWARDS -->
-    <div id="giftSelectionSection" class="screen-section">
-        <div class="container">
+        <!-- SECTION 2: THE 5 PREMIUM REWARDS -->
+        <div id="giftSelectionSection" class="app-screen">
             <h1>Choose Your Gift Card</h1>
             <h2>Select one of your top 5 premium rewards below</h2>
             <div class="cards">
@@ -259,11 +242,9 @@
                 <div class="card"><img src="Capture5.PNG"><button onclick="finish()">Claim Reward 5</button></div>
             </div>
         </div>
-    </div>
 
-    <!-- SECTION 3: PLAYFUL SURPRISE SCREEN -->
-    <div id="successSection" class="screen-section">
-        <div class="container">
+        <!-- SECTION 3: PLAYFUL SURPRISE SCREEN -->
+        <div id="successSection" class="app-screen">
             <h1>🎁 Choice Registered!</h1>
             <div class="status-box">
                 <h2 style="color: #f43f5e; margin-top: 0; font-weight: 700; font-size: 1.8rem;">🤫 Shhh... It's a Secret!</h2>
@@ -272,6 +253,7 @@
                 </p>
             </div>
         </div>
+
     </div>
 
     <script>
@@ -286,3 +268,22 @@
             matrix.height = window.innerHeight;
             const columns = Math.floor(matrix.width / fontSize);
             drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = 1;
+        }
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
+
+        const chars = ["0", "1", "🎉", "🎂", "❤️", "🎁", "✨"];
+
+        function drawMatrix() {
+            mCtx.fillStyle = 'rgba(11, 15, 25, 0.05)';
+            mCtx.fillRect(0, 0, matrix.width, matrix.height);
+            mCtx.fillStyle = '#10b981';
+            mCtx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > matrix.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
