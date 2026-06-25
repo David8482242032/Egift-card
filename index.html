@@ -12,11 +12,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-color);
@@ -25,7 +21,6 @@
             margin: 0;
             padding: 0;
         }
-
         .screen-section {
             min-height: 100vh;
             display: flex;
@@ -34,7 +29,6 @@
             padding: 40px 20px;
             box-sizing: border-box;
         }
-
         .login-box {
             background: var(--card-bg);
             padding: 40px;
@@ -45,7 +39,6 @@
             width: 100%;
             margin: auto;
         }
-
         .birthday-banner {
             font-size: 2.8rem;
             color: #fbbf24;
@@ -55,7 +48,6 @@
             letter-spacing: -1px;
             line-height: 1.2;
         }
-
         .sub-banner {
             font-size: 1.6rem;
             color: #f43f5e;
@@ -63,12 +55,10 @@
             margin-bottom: 25px;
             font-weight: 600;
         }
-
         .input-group {
             margin-bottom: 20px;
             text-align: left;
         }
-
         .input-group label {
             display: block;
             margin-bottom: 8px;
@@ -76,7 +66,6 @@
             font-size: 14px;
             font-weight: 500;
         }
-
         .input-group input {
             width: 100%;
             padding: 12px 16px;
@@ -87,7 +76,6 @@
             font-size: 16px;
             box-sizing: border-box;
         }
-
         #birthday-sparkle {
             display: none;
             font-size: 1.5rem;
@@ -95,20 +83,8 @@
             color: #10b981;
             margin-top: 20px;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
-
+        h1 { font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -0.5px; }
+        h2 { font-size: 1.5rem; color: var(--text-muted); font-weight: 400; margin-bottom: 30px; }
         button {
             background: var(--accent-color);
             color: white;
@@ -120,28 +96,15 @@
             cursor: pointer;
             width: 100%;
         }
-
-        button:hover {
-            background: var(--accent-hover);
-        }
-
-        #giftSelectionSection {
-            display: none;
-        }
-
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            margin: auto;
-        }
-
+        button:hover { background: var(--accent-hover); }
+        #giftSelectionSection { display: none; }
+        .container { max-width: 1000px; width: 100%; margin: auto; }
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
-
         .card {
             background: var(--card-bg);
             padding: 20px;
@@ -152,7 +115,6 @@
             flex-direction: column;
             justify-content: space-between;
         }
-
         .card img {
             width: 100%;
             height: auto;
@@ -160,17 +122,8 @@
             margin-bottom: 15px;
             object-fit: cover;
         }
-
-        .card button {
-            width: 100%;
-            padding: 10px 20px;
-            font-size: 14px;
-        }
-
-        #successSection {
-            display: none;
-        }
-
+        .card button { width: 100%; padding: 10px 20px; font-size: 14px; }
+        #successSection { display: none; }
         .status-box {
             background: rgba(244, 63, 94, 0.1);
             border: 1px solid #f43f5e;
@@ -206,56 +159,29 @@
         </div>
     </div>
 
-    <!-- SECTION 2: GIFT SELECTION WITH FIXED LOCAL IMAGES -->
+    <!-- SECTION 2: GIFT SELECTION WITH CORRECTED IMAGE PATHS -->
     <div id="giftSelectionSection" class="screen-section">
         <div class="container">
             <h1>Choose Your Gift Card</h1>
             <h2>Select one of your premium available rewards below</h2>
             <div class="cards">
-                <div class="card">
-                    <img src="Capture.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture1.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture2PNG.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture3.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture4.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture5.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture6.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture7.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture8.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture9.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
-                <div class="card">
-                    <img src="Capture10.PNG">
-                    <button onclick="finish()">Get This One</button>
-                </div>
+                <div class="card"><img src="Capture.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture1.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture3.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture4.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture5.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture6.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture7.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture8.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture9.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture10.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture12.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture13.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture14.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture15.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture16.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture17.PNG"><button onclick="finish()">Get This One</button></div>
+                <div class="card"><img src="Capture18.PNG"><button onclick="finish()">Get This One</button></div>
             </div>
         </div>
     </div>
@@ -277,13 +203,10 @@
         function checkAccess() {
             var okBlock = document.getElementById("birthday-sparkle");
             var giftArea = document.getElementById("giftSelectionSection");
-
             okBlock.style.display = "block";
             giftArea.style.display = "flex";
-            
             window.scrollTo(0, giftArea.offsetTop);
         }
-
         function finish(){
             var endSec = document.getElementById("successSection");
             endSec.style.display = "flex";
